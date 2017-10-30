@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Java Recommendation Service</title>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+        <style>
+            body {
+                word-wrap: break-word;
+            }
+
+            .table tr {
+                cursor: pointer;
+            }
+        </style>
+        <script type='text/javascript' src='/jquery/jquery.min.js'></script>
+    </head>
+    <body>
+        <div class="container" id="container">
+
+            <div class="page-header text-center">
+                <h1><span class="fa fa-compass"></span> Java Recommendation Service</h1>
+                <h2><span class="fa fa-bars"></span> Posts Page</h2>
+            </div>
+
+            <div>
+                <h3 class="text-center"><i>Click on any of the following posts to get recommendations!</i></h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Type</th>
+                            <th>Content</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% posts.forEach(function(post, i) { %>
+                        <tr class="clickable-row" id=<%= "p" + i %>>
+                            <td>Post<%= i + 1 %></td>
+                            <td><%= post["type"] %></td>
+                            <td>
+                                <strong>Text:<br/></strong>
+                                <%= post["text"] %>
+                                <br/>
+                                <br/>
+                                <% if (post["code"]) { %>
+                                    <strong>Code:<br/></strong>
+                                    <%= post["code"] %>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $(".clickable-row").click(function() {
+                        var postId = $(this).attr('id');
+                        var http = new XMLHttpRequest();
+                        var url = "/getRecs";
+                        var params = JSON.stringify({postClicked: postId.substr(1)});
+                        http.open("POST", url);
+                        http.setRequestHeader("Content-Type", "application/json");
+                        http.send(params);
+
+                        window.open("/showRecs", "_blank");
+                    });
+                });
+            </script>
+
+            <!--<div class="well">-->
+                <!--<strong>Why do you decide to log these actions?</strong>-->
+                <!--<ol>-->
+                    <!--<li>-->
+                        <!--<strong>Questions Clicked</strong>:-->
+                        <!--These could be used to identify the types of questions the user might be interested in.-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<strong>Tags Clicked</strong>:-->
+                        <!--These can help us identify broader collections of questions / specific topics that the user might be interested in.-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<strong>Questions Starred / Un-starred</strong>:-->
+                        <!--These can give us further and a much stronger indication of the user's interest in a paticular question / topic.-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<strong>Content Shared</strong>:-->
+                        <!--The content shared by the user is another strong indicator of interest and could be used to suggest similar content.-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<strong>UpVotes and DownVotes</strong>:-->
+                        <!--These can help us determine the user's activity levels and also the performance of the content presented on our site.-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<strong>Scrolling</strong>:-->
+                        <!--This can help us analyze the user's behaviour by logging how long and how deep the user is scrolling.-->
+                    <!--</li>-->
+                <!--</ol>-->
+            <!--</div>-->
+
+        </div>
+    </body>
+</html>
