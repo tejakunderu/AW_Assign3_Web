@@ -33,17 +33,19 @@
                         <strong>Content Collection:</strong><br/>
                         <ul>
                             <li>All relevant links from the Wikibooks Java Programming site were used to develop content for the recommendations.</li>
+                            <li>Source: <a href="https://en.wikibooks.org/wiki/Java_Programming" target="_blank">https://en.wikibooks.org/wiki/Java_Programming</a></li>
                         </ul>
                     </li>
                     <li>
                         <strong>Content Indexing:</strong><br/>
                         <ul>
                             <li>Content on each page on Wikibooks was split into separate payload blocks according to content type and fed to the Elastic Search Instance used.</li>
-                            <li>485 Content blocks consisting of Title, URL and Data were indexed from 91 links.</li>
+                            <li>576 Content blocks consisting of Title, URL and Data were indexed from 91 links.</li>
+                            <li>Elastic Search handles stemming.</li>
                         </ul>
                     </li>
                     <li>
-                        <strong>Web app:</strong><br/>
+                        <strong>Web App:</strong><br/>
                         <ul>
                             <li>The Elastic Search Instance hosted on AWS receives all data scraped from the Wikibooks pages and creates the index.</li>
                             <li>When clicked on a post, the Text and Code part of the post are modified and keywords from these are sent to the Elastic Search Instance.</li>

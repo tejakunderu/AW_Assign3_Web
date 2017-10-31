@@ -1,6 +1,8 @@
 // Routes
+/* Change Elastic Search point to http://localhost:9200/ */
 
 var elasticsearch = require('elasticsearch');
+// host needs to be changed to http://localhost:9200/ after installing Elastic Search, for the app to work offline.
 var client = new elasticsearch.Client({
     host: 'https://search-elasticengine-kbo7lvgosgrnzvlijimb2c4lk4.us-east-1.es.amazonaws.com',
     log: 'trace'
