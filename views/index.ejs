@@ -24,8 +24,44 @@
                 <h2><span class="fa fa-bars"></span> Posts Page</h2>
             </div>
 
+            <h3 class="text-center"><i>Click on any of the following posts to get recommendations!</i></h3>
+
+            <div class="well">
+                <h4><strong>How it works ---</strong></h4>
+                <ol>
+                    <li>
+                        <strong>Content Collection:</strong><br/>
+                        <ul>
+                            <li>All relevant links from the Wikibooks Java Programming site were used to develop content for the recommendations.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Content Indexing:</strong><br/>
+                        <ul>
+                            <li>Content on each page on Wikibooks was split into separate payload blocks according to content type and fed to the Elastic Search Instance used.</li>
+                            <li>485 Content blocks consisting of Title, URL and Data were indexed from 91 links.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Web app:</strong><br/>
+                        <ul>
+                            <li>The Elastic Search Instance hosted on AWS receives all data scraped from the Wikibooks pages and creates the index.</li>
+                            <li>When clicked on a post, the Text and Code part of the post are modified and keywords from these are sent to the Elastic Search Instance.</li>
+                            <li>Top 10 matches from the index with the highest score are then rendered in a new tab.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Originality:</strong><br/>
+                        <ul>
+                            <li>The unmodified Text from the posts was sometimes too long for the engine to process. The presence of a lot of stop words in the Text was also causing the engine to return skewed results.</li>
+                            <li>To address this issue, I have identified and removed stop words and other junk characters in the Text. Keywords from the Text and Code are picked up and sent to the engine to query.</li>
+                            <li>This approach resulted in significantly better and more relevant recommendations.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
             <div>
-                <h3 class="text-center"><i>Click on any of the following posts to get recommendations!</i></h3>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -70,36 +106,6 @@
                     });
                 });
             </script>
-
-            <!--<div class="well">-->
-                <!--<strong>Why do you decide to log these actions?</strong>-->
-                <!--<ol>-->
-                    <!--<li>-->
-                        <!--<strong>Questions Clicked</strong>:-->
-                        <!--These could be used to identify the types of questions the user might be interested in.-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<strong>Tags Clicked</strong>:-->
-                        <!--These can help us identify broader collections of questions / specific topics that the user might be interested in.-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<strong>Questions Starred / Un-starred</strong>:-->
-                        <!--These can give us further and a much stronger indication of the user's interest in a paticular question / topic.-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<strong>Content Shared</strong>:-->
-                        <!--The content shared by the user is another strong indicator of interest and could be used to suggest similar content.-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<strong>UpVotes and DownVotes</strong>:-->
-                        <!--These can help us determine the user's activity levels and also the performance of the content presented on our site.-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<strong>Scrolling</strong>:-->
-                        <!--This can help us analyze the user's behaviour by logging how long and how deep the user is scrolling.-->
-                    <!--</li>-->
-                <!--</ol>-->
-            <!--</div>-->
 
         </div>
     </body>
