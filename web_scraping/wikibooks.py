@@ -1,8 +1,13 @@
+# Run the following script to push data to the elastic search engine.
+# The endpoint must be set accordingly.
+
 import urllib3
 from bs4 import BeautifulSoup, Comment
 from elasticsearch import Elasticsearch
 
 base_url = 'https://en.wikibooks.org'
+# This endpoint needs to be changed to http://localhost:9200/ once elastic search is installed locally.
+# elasticengine = Elasticsearch(['http://localhost:9200/'])
 elasticengine = Elasticsearch(['https://search-elasticengine-kbo7lvgosgrnzvlijimb2c4lk4.us-east-1.es.amazonaws.com'])
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -37,3 +42,5 @@ for url in urls:
             elasticengine.index(index="aw-rec-engine", doc_type="docs", body=esData)
             heading = element.find(class_='mw-headline').text
             htmlData = ''
+    esData = {'title': heading, 'html': htmlData, 'url': url}
+    elasticengine.index(index="aw-rec-engine", doc_type="docs", body=esData)
